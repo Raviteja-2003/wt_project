@@ -1,7 +1,4 @@
-<?php
- $name=$_POST["name"];
- $email=$_POST["email"];
-?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,7 +11,9 @@
   </head>
   <body>
     <nav id="desktop-nav">
-      <div class="logo">John Doe</div>
+      <div class="logo">
+      <?php echo $_POST["userName"] ?>
+      </div>
       <div>
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
@@ -25,7 +24,9 @@
       </div>
     </nav>
     <nav id="hamburger-nav">
-      <div class="logo"><?php echo $name?></div>
+      <div class="logo">
+        <?php echo "hello" ?>
+      </div>
       <div class="hamburger-menu">
         <div class="hamburger-icon" onclick="toggleMenu()">
           <span></span>
@@ -46,9 +47,11 @@
       </div>
       <div class="section__text">
         <p class="section__text__p1">Hello, I'm</p>
-        <h1 class="title"><?php echo $name?></h1>
-        <p class="section__text__p2">Frontend Developer</p>
-        <div class="btn-container">
+        <h1 class="title">
+          <?php echo $_POST["userName"] ?>
+        </h1>
+        <p class="section__text__p2"><?php echo $_POST["userRole"] ?></p>
+        <!-- <div class="btn-container">
           <button
             class="btn btn-color-2"
             onclick="window.open('./assets/resume-example.pdf')"
@@ -58,20 +61,27 @@
           <button class="btn btn-color-1" onclick="location.href='./#contact'">
             Contact Info
           </button>
-        </div>
+        </div> -->
         <div id="socials-container">
-          <img
+        <img
             src="./assets/linkedin.png"
             alt="My LinkedIn profile"
             class="icon"
-            onclick="location.href='https://linkedin.com/'"
-          />
-          <img
+            onclick="location.href='<?php echo htmlspecialchars($_POST['userUrl']); ?>';"
+        />
+        <img
+            src="./assets/github.png"
+            alt="My Github profile"
+            class="icon"
+            onclick="location.href='<?php echo htmlspecialchars($_POST['gitUrl']); ?>';"
+        />
+
+          <!-- <img
             src="./assets/github.png"
             alt="My Github profile"
             class="icon"
             onclick="location.href='https://github.com/'"
-          />
+          /> -->
         </div>
       </div>
     </section>
@@ -95,7 +105,7 @@
                 class="icon"
               />
               <h3>Experience</h3>
-              <p>2+ years <br />Frontend Development</p>
+              <p class="subtext"><?php echo $_POST["userExperience"] ?></p>
             </div>
             <div class="details-container">
               <img
@@ -104,17 +114,12 @@
                 class="icon"
               />
               <h3>Education</h3>
-              <p>B.Sc. Bachelors Degree<br />M.Sc. Masters Degree</p>
+              <p class = "subtext"><?php echo $_POST["userEducation"] ?></p>
             </div>
           </div>
           <div class="text-container">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis
-              reprehenderit et laborum, rem, dolore eum quod voluptate
-              exercitationem nobis, nihil esse debitis maxime facere minus sint
-              delectus velit in eos quo officiis explicabo deleniti dignissimos.
-              Eligendi illum libero dolorum cum laboriosam corrupti quidem,
-              reiciendis ea magnam? Nulla, impedit fuga!
+            <?php echo $_POST["userAbout"] ?>
             </p>
           </div>
         </div>
@@ -132,9 +137,9 @@
       <div class="experience-details-container">
         <div class="about-containers">
           <div class="details-container">
-            <h2 class="experience-sub-title">Frontend Development</h2>
+            <h2 class="experience-sub-title"><?php echo $_POST["userRole"] ?></h2>
             <div class="article-container">
-              <article>
+              <!-- <article>
                 <img
                   src="./assets/checkmark.png"
                   alt="Experience icon"
@@ -142,7 +147,7 @@
                 />
                 <div>
                   <h3>HTML</h3>
-                  <p>Experienced</p>
+                  <p class="subtext">Experienced</p>
                 </div>
               </article>
               <article>
@@ -153,7 +158,7 @@
                 />
                 <div>
                   <h3>CSS</h3>
-                  <p>Experienced</p>
+                  <p class="subtext">Experienced</p>
                 </div>
               </article>
               <article>
@@ -164,7 +169,7 @@
                 />
                 <div>
                   <h3>SASS</h3>
-                  <p>Intermediate</p>
+                  <p class="subtext">Intermediate</p>
                 </div>
               </article>
               <article>
@@ -175,7 +180,7 @@
                 />
                 <div>
                   <h3>JavaScript</h3>
-                  <p>Basic</p>
+                  <p class="subtext">Basic</p>
                 </div>
               </article>
               <article>
@@ -186,7 +191,7 @@
                 />
                 <div>
                   <h3>TypeScript</h3>
-                  <p>Basic</p>
+                  <p class="subtext">Basic</p>
                 </div>
               </article>
               <article>
@@ -197,12 +202,49 @@
                 />
                 <div>
                   <h3>Material UI</h3>
-                  <p>Intermediate</p>
+                  <p class="subtext">Intermediate</p>
                 </div>
-              </article>
+              </article> -->
+              <?php
+                // $skills = $_POST["userSkills"];
+                // $skills = explode(",", $skills);
+                // foreach($skills as $skill) {
+                //   echo "<article>
+                //   <img
+                //     src='./assets/checkmark.png'
+                //     alt='Experience icon'
+                //     class='icon'
+                //   />
+                //   <div>
+                //     <h3>$skill</h3>
+                //     <p class='subtext'>Experienced</p>
+                //   </div>
+                // </article>";
+                // }
+                $numberOfSkills = $_POST["numberOfSkills"];
+    
+                $skills = array();
+                for ($i = 1; $i <= $numberOfSkills; $i++) {
+                    $skillName = "userSkill" . $i;
+                    if (isset($_POST[$skillName])) {
+                        // $skills[] = $_POST[$skillName];
+                        echo "<article>
+                        <img
+                          src='./assets/checkmark.png'
+                          alt='Experience icon'
+                          class='icon'
+                        />
+                        <div>
+                          <h3>$_POST[$skillName]</h3>
+                          <p class='subtext'>Experienced</p>
+                        </div>
+                      </article>";
+                    }
+                }
+              ?>
             </div>
           </div>
-          <div class="details-container">
+          <!-- <div class="details-container">
             <h2 class="experience-sub-title">Frontend Development</h2>
             <div class="article-container">
               <article>
@@ -213,7 +255,7 @@
                 />
                 <div>
                   <h3>PostgreSQL</h3>
-                  <p>Basic</p>
+                  <p class="subtext">Basic</p>
                 </div>
               </article>
               <article>
@@ -224,7 +266,7 @@
                 />
                 <div>
                   <h3>Node JS</h3>
-                  <p>Intermediate</p>
+                  <p class="subtext">Intermediate</p>
                 </div>
               </article>
               <article>
@@ -235,7 +277,7 @@
                 />
                 <div>
                   <h3>Express JS</h3>
-                  <p>Intermediate</p>
+                  <p class="subtext">Intermediate</p>
                 </div>
               </article>
               <article>
@@ -246,12 +288,12 @@
                 />
                 <div>
                   <h3>Git</h3>
-                  <p>Intermediate</p>
+                  <p class="subtext">Intermediate</p>
                 </div>
               </article>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <img
         src="./assets/arrow.png"
@@ -265,31 +307,39 @@
       <h1 class="title">Projects</h1>
       <div class="experience-details-container">
         <div class="about-containers">
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-1.png"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">Project One</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/'"
-              >
-                Github
-              </button>
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/'"
-              >
-                Live Demo
-              </button>
-            </div>
-          </div>
-          <div class="details-container color-container">
+          <?php
+            $numberOfProjects = $_POST["numberOfProjects"];
+    
+            $skills = array();
+            for ($i = 1; $i <= $numberOfProjects; $i++) {
+                $projectLink = $_POST["userProjectLink" . $i];
+                $projectName = $_POST["userProjectName" . $i];
+                
+                    // $skills[] = $_POST[$skillName];
+                    echo "<div class='details-container color-container'>
+                    <div class='article-container'>
+                      <img
+                        src='./assets/project-$i.png'
+                        alt='Project $i'
+                        class='project-img'
+                      />
+                    </div>
+                    <h2 class='experience-sub-title project-title'>$projectName</h2>
+                    <div class='btn-container'>
+                      <button
+                        class='btn btn-color-2 project-btn'
+                        onclick='location.href=$projectLink'
+                      >
+                        Github
+                      </button>
+                      
+                    </div>
+                  </div>";
+                
+            }
+          ?>
+          
+          <!-- <div class="details-container color-container">
             <div class="article-container">
               <img
                 src="./assets/project-2.png"
@@ -336,7 +386,7 @@
                 Live Demo
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <img
@@ -356,7 +406,7 @@
             alt="Email icon"
             class="icon contact-icon email-icon"
           />
-          <p><?php echo "<a href=echo $email>Example@gmail.com</a>"?></p>
+          <p><?php echo $_POST["userEmail"] ?></p>
         </div>
         <div class="contact-info-container">
           <img
@@ -364,7 +414,7 @@
             alt="LinkedIn icon"
             class="icon contact-icon"
           />
-          <p><a href="">LinkedIn</a></p>
+          <p><a href='<?php echo htmlspecialchars($_POST['userUrl']); ?>'>LinkedIn</a></p>
         </div>
       </div>
     </section>
